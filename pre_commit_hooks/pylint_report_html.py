@@ -66,7 +66,7 @@ class PylintHtmlReport(PreCommitTools):
 
     def run_pylint(self):
         logger.debug("run pylint")
-        Run(self.pylint_args, do_exit=False)
+        Run(self.pylint_args, exit=False)
 
     def set_params(self):
         logger.debug("define parser")
@@ -86,23 +86,23 @@ class PylintHtmlReport(PreCommitTools):
 
     def update_pylint_args(self):
         logger.debug("update pylint args")
-        # self.pylint_args.extend(["--exit-zero", "--persistent=n", "--reports=n", "--score=n"])
-        # self.pylint_args.extend(
-        #     [f"--output={self.output_json.as_posix()}", "--output-format=pylint_report.CustomJsonReporter"],
-        # )
+        self.pylint_args.extend(["--exit-zero", "--persistent=n", "--reports=n", "--score=n"])
+        self.pylint_args.extend(
+            [f"--output={self.output_json.as_posix()}", "--output-format=pylint_report.CustomJsonReporter"],
+        )
         self.pylint_args.extend(self.namesapace_args.filenames)
         print(self.pylint_args)
 
 
 def main(argv: Sequence[str] | None = None) -> int:
     instance = PylintHtmlReport()
-    instance.set_params()
-    instance.get_args()
-    instance.generate_ouptput_path()
-    instance.update_pylint_args()
-    instance.run_pylint()
-    instance.convert_json_to_html()
-    instance.clean_json_report()
+    # instance.set_params()
+    # instance.get_args()
+    # instance.generate_ouptput_path()
+    # instance.update_pylint_args()
+    # instance.run_pylint()
+    # instance.convert_json_to_html()
+    # instance.clean_json_report()
     return instance.file_exist(file=instance.output_html) and not instance.file_empty(file=instance.output_html)
 
 
